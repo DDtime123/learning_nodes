@@ -122,7 +122,23 @@ git push origin master
 
 ##### 2.1 git pull 删除的本地文件
 
-在我使用 Git 和 Github 的过程中，出现过
+在我使用 Git 和 Github 的过程中，出现过由于远程仓库在远程（Github 网页上）作出了修改，导致远程仓库有本地仓库没有的更改，而本地仓库也作出了更改，导致本地仓库和远程仓库不能同步的情况：
+
+git push 失败：
+
+![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/20211013193819.png)
+
+要想正常地进行 push ，有两种办法：
+
+* 第一种，现将远程仓库 PULL 下来，这样会覆盖本地仓库中已经进行了 git add 操作的文件。
+
+* 第二种，强行将本地仓库 PUSH 上去，使用 --force 标签将远程仓库覆盖。
+
+两种方法都会覆盖一方的更改，所以会有撤销更改和增加新 branch 的需求：
+
+首先是撤销更改：
+
+
 
 
 
