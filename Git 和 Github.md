@@ -1,6 +1,6 @@
 # Git 和 Github
 
-#### **大纲：**
+**大纲：**
 
 * 将自己的本地项目推向 master 分支
 * 单独使用自己的原始项目和拉取请求
@@ -9,19 +9,21 @@
 
 
 
-#### 将本地项目推向 master 分支：
+
+
+#### 1. 将本地项目推向 master 分支：
 
 * 1.在 Github 上创建一个存储库：
 
-  ![1633829487219](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1633829487219.png)
+  ![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/1633829487219.png)
 
   可以选择加入 README 文件和 gitignore 文件：
 
-  ![1633829678368](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1633829678368.png)
+  ![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/1633829678368.png)
 
 * 2.从 GitHub 获取 URL 用于克隆
 
-  ![1633830134418](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1633830134418.png)
+  ![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/1633830134418.png)
 
   
 
@@ -45,13 +47,13 @@
 
   * 使用 git status 命令来检查本地文件的更改状态。
 
-    ![1633831466055](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1633831466055.png)
+    ![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/1633831466055.png)
 
   * 暂存所有更改，此时输入 git add -A
 
     暂存后使用 git status ，要提交的文件成了绿色
 
-    ![1633834384709](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1633834384709.png)
+    ![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/1633834384709.png)
 
     或者不想将所有文件添加到 GitHub 存储库中，可以选择性的添加文件 git add my_filename。
 
@@ -99,8 +101,30 @@
 
 
 
-#### 单独拉取请求工作流
+##### 1.1 为本地仓库添加远程仓库的方法
+
+~~~go
+git init
+git add -A
+git commit -m "my first commit"
+git remote add origin <url_of_remote_repository>
+git push origin master
+~~~
+
+
+
+#### 2. 单独拉取请求工作流
 
 * 将功能分支推送到远程 存储库 git push origin my_feature_branch
 * 在浏览器上导航到 Github 存储库，
+
+
+
+##### 2.1 git pull 删除的本地文件
+
+在我使用 Git 和 Github 的过程中，出现过
+
+
+
+##### 2.2 使用 Idea 集成的 git 功能
 
