@@ -138,7 +138,15 @@ git push 失败：
 
 首先是撤销更改：
 
+* 先是使用 git pull 覆盖掉本地更改
 
+* 然后使用 git reflog 查看在此 repo 中的操作历史记录：
+
+  ![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/20211013200433.png)
+
+  请根据这些记录前的 
+
+* 
 
 
 
