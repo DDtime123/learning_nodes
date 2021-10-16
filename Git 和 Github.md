@@ -3,11 +3,10 @@
 **大纲：**
 
 * 将自己的本地项目推向 master 分支
-* 单独使用自己的原始项目和拉取请求
-* 单独使用克隆项目
-* 共同为项目做出贡献
-
-
+* git pull 删除的本地文件
+* 使用 Idea 集成的 git 功能
+* 问题
+* 参考
 
 
 
@@ -113,14 +112,7 @@ git push origin master
 
 
 
-#### 2. 单独拉取请求工作流
-
-* 将功能分支推送到远程 存储库 git push origin my_feature_branch
-* 在浏览器上导航到 Github 存储库，
-
-
-
-##### 2.1 git pull 删除的本地文件
+#### 2. git pull 删除的本地文件
 
 在我使用 Git 和 Github 的过程中，出现过由于远程仓库在远程（Github 网页上）作出了修改，导致远程仓库有本地仓库没有的更改，而本地仓库也作出了更改，导致本地仓库和远程仓库不能同步的情况：
 
@@ -134,7 +126,7 @@ git push 失败：
 
 * 第二种，强行将本地仓库 PUSH 上去，使用 --force 标签将远程仓库覆盖。
 
-两种方法都会覆盖一方的更改，所以会有撤销更改和增加新 branch 的需求：
+两种方法都会覆盖一方的更改，所以会有撤销更改的需求：
 
 首先是撤销更改：
 
@@ -144,11 +136,116 @@ git push 失败：
 
   ![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/20211013200433.png)
 
-  请根据这些记录前的 
+* 请根据这些记录前的索引，使用 git reset --hard index 命令 让本地仓库复原之前的 commit 镜像：
 
-* 
+  ~~~git
+  git reset --hard 87c57fd
+  ~~~
+
+  如上命令可让本地仓库恢复至执行 git pull 前的一次 commit 镜像。
 
 
 
-##### 2.2 使用 Idea 集成的 git 功能
+#### 3. 使用 Idea 集成的 git 功能
+
+首先 idea 提供了集成 git status 的功能，通过快捷键 Alt + 0 呼出 commit 面板，可以看到当前进行了 git add，已做了更改但还没有进行 git commit 操作的文件：
+
+![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/20211014090024.png)
+
+接下来查看 git 菜单，这里提供了 git 命令选项：
+
+![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/20211014090812.png)
+
+编写 commit 信息后，就可以提交 commit：
+
+![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/20211014091059.png)
+
+同理，点击 push 即上传至远程目录。
+
+
+
+当然，我这里的 idea 项目在之前就已经通过 git 命令行命令初始化了 git 项目，并且添加了远程仓库：
+
+~~~git
+git init
+	... git add , git commit
+git remote add origin <url_of_remote_repository>
+git push origin master
+~~~
+
+如果不想要通过命令行添加远程仓库，可以通过 Git -> Manage Remotes... 添加或更改远程仓库：
+
+![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/20211014092726.png)
+
+![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/20211014092942.png)
+
+这里添加另一个远程仓库作为测试：
+
+![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/20211014093703.png)
+
+添加以后可以在命令行里执行 git remote -v 命令查看当前项目的远程仓库，确认无误后再执行下一步：
+
+![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/20211014093753.png)
+
+此时可以通过命令行命令 “git push 主机名 branch名” 推送到相应的仓库：
+
+~~~git
+git push origin master 
+git push origin2 master
+~~~
+
+![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/20211014101018.png)
+
+接下来在 idea 中推送到新的远仓库：
+
+请点击 Git -> Push，
+
+![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/20211014101238.png)
+
+点击 origin 选择想要 push 上去的主机（远程仓库），
+
+![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/20211014101129.png)
+
+再选择或创建新的 branch，就可以 push 上去了：
+
+![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/20211014101413.png)
+
+
+
+#### 4. 问题
+
+Q：将修改后的项目推送到远程仓库，会覆盖掉旧版本吗？
+
+A：将修改后的本地仓库推送到远程仓库的已有 branch ，将在远程仓库创建一个新的 commit 镜像，这点和在本地仓库 commit 一次的结果相似。
+
+在这样的 commit 的过程中，与其说修改后的项目覆盖掉了旧版本的项目，不如说所有版本的版本根据时间轴创建了一条永久的存储链。这里的链是根据 Git 的存储方式来修饰的：在每次 commit 后，除了将当前镜像修改以外，还记录其相对于旧版本的更改，这样无论 commit 了多少次，都能根据这条存储链上记录的更改复原任意一次 commit 的镜像。
+
+Github 比起本地 Git 能够更加方便的查看之前的 commit 镜像，打开 Github 仓库页，点击右上角的 commits，即可看到所有的镜像：
+
+![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/20211014234944.png)
+
+点击想要查看的镜像，比如我想查看最初的 commit ，点击最初的 commit：
+
+![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/20211014235223.png)
+
+这里会出现这个版本和前一个版本的比对，我们点击右上角的 Browser files，即可查看该版本的项目文件：
+
+![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/20211014235357.png)
+
+返回旧版本项目：
+
+![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/20211014235654.png)
+
+如果想要在本地仓库恢复旧版本项目，请将项目 clone 或者  pull 下来，使用之前所说的 “git reflog” 查看 commit 的索引，然后使用 “git reset --hard 索引” 的方式恢复：
+
+~~~git
+git reflog 
+git reset --hard 索引
+~~~
+
+#### 5. 参考
+
+[1] [如何给 Git repo 添加两个远程仓库](https://articles.assembla.com/en/articles/1136998-how-to-add-a-new-remote-to-your-git-repo)
+
+[2] [设置 Git 存储库](https://www.jetbrains.com/help/idea/set-up-a-git-repository.html#check_project_status)
 
