@@ -251,13 +251,95 @@ th:if="${product.price} &lt; 100"
 switch 选择语句：
 
 ~~~html
-<div th:switch="${user.role}">
-    <p th:case="'admin'">User is an administrator</p>
-    <p th:case="#{roles.manager}">User is a manager</p>
+<div th:switch="${customer.gender?.name()}">
+    <p th:case="FEMALE">User is an administrator</p>
+    <p th:case="MALE">User is a manager</p>
+    <p th:case="*">User is some other thing</p>
 </div>
 ~~~
 
 
 
+#### 4. Spring 表达式 SpEL
+
+在 Thymeleaf 中使用 Spring 的表达式接口1进行表达式求值：
+
+以下代码引入 SpEL API 来评估文字字符串表达式 “Hello World”：
+
+~~~java
+ExpressionParser parser = new SpelExpressionParser();
+Expression exp = parser.parseExpression("'Hello World'");
+String message = (String) exp.getValue();
+~~~
+
+message 变量的值只是 “Hello World”
 
 
+
+在引入了 Thymeleaf 的 HTML 页面中，可以使用如下表达式：
+
+~~~html
+${4 * 5 * 2 % 7}
+${#dates.createNow()} 获取当前日期时间
+${customerList[2].paymentMethod} 获取对象的属性，这里的属性是私有属性，但是由于加入了 bean 可以直接用点运算符获取
+${new java.util.Date().getTime()} 获取当前时间
+${T(java.lang.Math).random()} 获取随机数
+~~~
+
+#### 5. 链接
+
+绝对网址：
+
+~~~html
+th:href="@{http://www.thymeleaf.org}"
+~~~
+
+相对网址：
+
+~~~html
+th:href="@{../templates/login.html}"
+th:href="@{/order/details(orderId=${o.id})}"
+~~~
+
+#### 6. 表单 form
+
+我们可以通过一个 * 星号语法，作为选取对象上的表达式：
+
+~~~html
+th:object="${session.user}"
+	th:text="*{firstName}"
+	th:text="*{lastName}"
+~~~
+
+星号选取了选定的的对象，这里是层次级别在外边一层的 div 标签中声明的对象 session。当然，这要通过 th:object 来声明。
+
+th:object 设置当前的选定对象
+
+th:field 设置 something ，然后星号语法会从这个 something 中选取属性值
+
+
+
+#### 7. 应用上下文
+
+Spring 上下文也被称作 Spring IOC 容器，它负责从 XML，Java 注释和配置文件中的 Java 代码读取配置元数据来实例化，配置和组装 bean。
+
+容器管理的对象是 bean，@Service注解让它能够被扫描并在容器中注册为 bean：
+
+~~~java
+@Service
+public class GreetingService{
+    private static final Loggerlogger = Logger.getLogger(GreetingService.class.getName());
+    
+    public GreetingService(){}
+    
+    public void greet() {
+        logger.info("Gaurav Bytes welcomes you for your first tutorial on Spring!!!");
+    }
+}
+~~~
+
+实例化一个容器：
+
+~~~java
+Configutable
+~~~

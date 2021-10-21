@@ -8,13 +8,13 @@ OpenCV是一个开源的程序库，用于开发在Windows，Linux，Android和M
 
 Windows平台：到官网下载 Windows 版安装包，安装即可：[openCV 下载](https://opencv.org/releases/)：
 
-![1632917594672](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1632917594672.png)
+![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/1632917594672.png)
 
 
 
 安装好后，OpenCV安装目录如下：
 
-![1632917882571](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1632917882571.png)
+![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/1632917882571.png)
 
 
 
@@ -22,13 +22,40 @@ Ubuntu 16.4 平台安装
 
 参考：[C++ opencv 3.3 install on ubuntu 16.4](https://www.cnblogs.com/cxxszz/p/7338909.html)
 
+第一步，安装依赖包：
+
+~~~makefile
+sudo apt-get install --assume-yes build-essential cmake git
+sudo apt-get install --assume-yes pkg-config unzip ffmpeg qtbase5-dev python-dev python3-dev python-numpy python3-numpy
+sudo apt-get install --assume-yes libopencv-dev libgtk-3-dev libdc1394-22 libdc1394-22-dev libjpeg-dev libpng12-dev libtiff5-dev libjasper-dev
+sudo apt-get install --assume-yes libavcodec-dev libavformat-dev libswscale-dev libxine2-dev libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev
+sudo apt-get install --assume-yes libv4l-dev libtbb-dev libfaac-dev libmp3lame-dev libopencore-amrnb-dev libopencore-amrwb-dev libtheora-dev
+sudo apt-get install --assume-yes libvorbis-dev libxvidcore-dev v4l-utils python-vtk
+sudo apt-get install --assume-yes liblapacke-dev libopenblas-dev checkinstall
+sudo apt-get install --assume-yes libgdal-dev
+~~~
+
+第二步，下载源文件 source。
+
+第三步，解压源文件：
+
+~~~makefile
+cd ~/opencv
+mkdir build
+cd build
+
+make -j7 # runs 7 jobs in parallel
+
+sudo make install
+~~~
+
 ##### 1.2 Visual Studio 2019 配置 OpenCV 开发环境
 
 (1) 首先，配置系统环境变量
 
 在系统环境变量的 Path 中添加 opencv\build\x64\vc14\bin 。根据不同版本的OpenCV， “vc14” 这个文件夹名称可能不同，也可能有多个 “vc15”，“vc13”之类的文件夹，但是基本目录结构相同：
 
-![1632917968362](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1632917968362.png)
+![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/1632917968362.png)
 
 
 
@@ -36,29 +63,29 @@ Ubuntu 16.4 平台安装
 
 首先新建一个 C++ 的空项目：
 
-![1632918654235](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1632918654235.png)
+![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/1632918654235.png)
 
 
 
 打开：视图 -> 其它窗口 -> 属性管理器：
 
-![1632918828363](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1632918828363.png)
+![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/1632918828363.png)
 
 
 
 接下来会多出一个 **属性管理器** 工作区，我们选择在这里配置项目的属性。这是因为在这里配置项目的属性，相当于给 IDE 的全局配置了属性，以后再创建 OpenCV 的工程项目就不用再次配置项目属性了：
 
-![1632919344791](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1632919344791.png)
+![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/1632919344791.png)
 
 右击 ”Debug | 64“ ，点击属性，我们就可以配置 IDE 的全局属性了：
 
-![1632919762252](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1632919762252.png)
+![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/1632919762252.png)
 
 
 
 首先配置头文件（h，hpp）。在 **通用属性 -> VC++目录 -> 包含目录** 中添加以下三个目录：
 
-![1632920019103](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1632920019103.png)
+![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/1632920019103.png)
 
 三个目录：
 
@@ -95,9 +122,9 @@ opencv\build\x64\vc14\lib
 
 如果只是打开：项目 -> 属性，我们只能配置当前项目的属性：
 
-![1632919456920](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1632919456920.png)
+![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/1632919456920.png)
 
-![1632919507060](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1632919507060.png)
+![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/1632919507060.png)
 
 
 
@@ -158,9 +185,217 @@ int main()
 
 注意我们配置的 Debug | 64 项目的全局属性，要切换到这个调试配置，否则 IDE 无法找到 OpenCV 库的头文件，也无法编译成功：
 
-![1632920893138](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1632920893138.png)
+![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/1632920893138.png)
 
-###### 1.2.1 题目与代码分析
+
+
+
+
+##### 1.3 Ubuntu 平台下配置 OpenCV 开发环境
+
+~~~ Makefile
+CC = g++
+PROJECT = project_name
+SRC = main.cpp
+LIBS = `pkg-config --cflag --libs opencv`
+
+$(PROJECT) : $(SRC)
+	$(CC) $(SRC) -o $(PROJECT) $(LIBS)
+~~~
+
+OpenCV Makefile 配置如上。
+
+
+
+#### 2. 常用OpenCV 库
+
+OpenCV 库根据功能不同分成了好几个模块，这些模块都是内置的库文件，位于 lib 目录下，常用的模块有：
+
+* core 模块：包含了程序库的核心功能，包括基本的数据结构和算法；
+* imgporc 模块：包含了主要的图像处理函数；
+* highgui 模块：包含图像，视频读写函数和部分用户界面函数；
+* features2d 模块：包含特征点检测器，描述子以及特征点匹配框架；
+* calib3d 模块：包含相机标定，双视角几何估计以及立体函数；
+* video 模块：包含运动估计，特征跟踪以及前景提取函数和类；
+* objdetect 模块：包括目标检测函数，例如面部和人体探测器；
+
+除了以上常用的模块以外，OpenCV 库还包含了其他实用的模块：机器学习模块（ml），计算几何算法（flann），共享代码（contrib），过时的代码（legacy）以及GPU加速代码（gpu）等。
+
+如果使用到某些 OpenCV 函数，就必须在链接时将程序与包含这些函数的库相连。每个模块都有一个对应的头文件（位于 include 目录）。包含头文件的格式如下：
+
+~~~c++
+#include <opencv2/core/core.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/highgui/highgui.hpp>
+~~~
+
+
+
+#### 3. 使用 OpenCV 库装载，显示和存储图像
+
+首先要确定实现功能所需的头文件，这里我们要简单的显示一个图像，所以需要定义了图像数据结构的核心库（core）以及包含了所有图形接口函数的 highgui 头文件：
+
+~~~c++
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+~~~
+
+在 main 函数中，首先定义一个表示图像的变量。在 OpenCV2 中，定义 cv::Mat 的对象：
+
+~~~c++
+cv::Mat image; // 创建一个新图像
+~~~
+
+这个定义创建了一个尺寸为 0x0 的图像，可以通过方为 cv::Mat 的 size 属性来验证：
+
+~~~c++
+std::cout << "This image is " << image.rows << " x " << image.cols << " y " << std::endl;
+~~~
+
+接下来调用 cv::Mat 的读函数，就可以读入一个图像，解码，然后分配内存：
+
+~~~c++
+image = cv::imread("股票.svg"); // 读取输入图像
+~~~
+
+
+
+#### 4. OpenCV 人脸识别
+
+~~~c++
+#include <opencv2/objdetect.hpp>
+#include <opencv2/highgui.hpp>
+#include <opencv2/imgproc.hpp>
+#include <iostream>
+
+using namespace std;
+using namespace cv;
+
+// 检测人脸的函数
+void detectAndDraw(Mat& img, CascadeClassifier& cascade,
+	CascadeClassifier& nestedCascade, double scale);
+
+string cascadeName, nestedCascadeName;
+
+int main(int argc, const char** arg) {
+
+	// Video 捕获类， 用于为检测到的人脸播放视频 
+	VideoCapture capture;
+	Mat frame, image;
+
+	// 预训练好的， 具有面部特征的 XML 分类器 
+	CascadeClassifier cascade, nestedCascade;
+	double scale = 1;
+
+	// 从 "opencv/data/haarcascades" 目录加载分类器 
+	nestedCascade.load("F:/OPENCV/opencv/sources/data/haarcascades/haarcascade_eye.xml");
+
+	// 在程序执行前改变目录
+	cascade.load("F:/OPENCV/opencv/sources/data/haarcascades/haarcascade_frontalcatface.xml");
+
+	// Start Video..1) 0 for WebCam 2) "Path to Video" for a Local Video
+	capture.open(0);
+	if (capture.isOpened()) {
+
+		// 从 video 里获取画面（帧）， 还有监测人脸
+		cout << "Face Detection Started...." << endl;
+		while (1) {
+			capture >> frame;
+			if (frame.empty())
+				break;
+			Mat frame1 = frame.clone();
+			detectAndDraw(frame1, cascade, nestedCascade, scale);
+			char c = (char)waitKey(10);
+
+			// Press q to exit from window
+			if (c == 27 || c == 'q' || c == 'Q')
+				break;
+		}
+	}
+	else
+		cout << "Could not Open Camera";
+
+	return 0;
+}
+
+void detectAndDraw(Mat& img, CascadeClassifier& cascade,
+	CascadeClassifier& nestedCascade,
+	double scale)
+{
+	vector<Rect> faces, faces2;
+	Mat gray, smallImg;
+
+	cvtColor(img, gray, COLOR_RGB2GRAY); // 转换到 灰色的范围
+	double fx = 1 / scale;
+
+	// 重新设定 灰色图像的大小
+	resize(gray, smallImg, Size(), fx, fx, INTER_LINEAR);
+	equalizeHist(smallImg, smallImg);
+
+	// 使用级联分类器 检测不同尺寸的脸 
+	cascade.detectMultiScale(smallImg, faces, 1.1,
+		2, 0 | CASCADE_SCALE_IMAGE, Size(30, 30));
+
+	// 画一个圆形包围脸
+	for (size_t i = 0; i < faces.size(); i++) {
+		Rect r = faces[i];
+		Mat smallImgROI;
+		vector<Rect> nestedObjects;
+		Point center;
+		Scalar color = Scalar(255, 0, 0); // 给绘画工具设置颜色
+		int radius;
+
+		double aspect_ratio = (double)r.width / r.height;
+		if (0.75 < aspect_ratio && aspect_ratio < 1.3)
+		{
+			center.x = cvRound((r.x + r.width * 0.5) * scale);
+			center.y = cvRound((r.y + r.height * 0.5) * scale);
+			radius = cvRound((r.width + r.height) * 0.25 * scale);
+			circle(img, center, radius, color, 3, 8, 0);
+		}
+		else
+			rectangle(img, cvPoint(cvRound(r.x * scale), cvRound(r.y * scale)),
+				cvPoint(cvRound((r.x + r.width - 1) * scale),
+					cvRound((r.y + r.height - 1) * scale)), color, 3, 8, 0);
+		if (nestedCascade.empty())
+			continue;
+		smallImgROI = smallImg(r);
+
+		// 从输入图像中，检测眼睛
+		nestedCascade.detectMultiScale(smallImgROI, nestedObjects, 1.1, 2,
+			0 | CASCADE_SCALE_IMAGE, Size(30, 30));
+		// 在眼睛上画一个圆形
+		for (size_t j = 0; j < nestedObjects.size(); j++) {
+			Rect nr = nestedObjects[j];
+			center.x = cvRound((r.x + nr.x + nr.width * 0.5) * scale);
+			center.y = cvRound((r.y + nr.y + nr.height * 0.5) * scale);
+			radius = cvRound((nr.width + nr.height) * 0.25 * scale);
+			circle(img, center, radius, color, 3, 8, 0);
+		}
+
+		// 展现出处理过后 检测到的脸 的图像 
+		imshow("Face Detection", img);
+	}
+}
+~~~
+
+
+
+
+
+
+
+#### 5. 遇到问题
+
+问题：在 Ubuntu 虚拟机中使用摄像头无法获取图像，运行显示： select timeout。
+
+解决方法：关闭虚拟机，在虚拟机设置里将USB控制器设置为USB3.0兼容模式。
+
+![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/1633595634491.png)
+
+
+
+#### 6. 问题
 
 (1) 修改OpenCV VideoCapture类的视频源，使其从本地视频中读入数据。
 
@@ -309,212 +544,10 @@ int main()
 
 处理过后图像的质量如下：
 
-![1633612416705](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1633612416705.png)
+![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/20211017210908.png)
 
 
 
-##### 1.3 Ubuntu 平台下配置 OpenCV 开发环境
+#### 6. 参考
 
-~~~ Makefile
-CC = g++
-PROJECT = project_name
-SRC = main.cpp
-LIBS = `pkg-config --cflag --libs opencv`
-
-$(PROJECT) : $(SRC)
-	$(CC) $(SRC) -o $(PROJECT) $(LIBS)
-~~~
-
-OpenCV Makefile 配置如上。
-
-
-
-#### 2. 常用OpenCV 库
-
-OpenCV 库根据功能不同分成了好几个模块，这些模块都是内置的库文件，位于 lib 目录下，常用的模块有：
-
-* core 模块：包含了程序库的核心功能，包括基本的数据结构和算法；
-* imgporc 模块：包含了主要的图像处理函数；
-* highgui 模块：包含图像，视频读写函数和部分用户界面函数；
-* features2d 模块：包含特征点检测器，描述子以及特征点匹配框架；
-* calib3d 模块：包含相机标定，双视角几何估计以及立体函数；
-* video 模块：包含运动估计，特征跟踪以及前景提取函数和类；
-* objdetect 模块：包括目标检测函数，例如面部和人体探测器；
-
-除了以上常用的模块以外，OpenCV 库还包含了其他实用的模块：机器学习模块（ml），计算几何算法（flann），共享代码（contrib），过时的代码（legacy）以及GPU加速代码（gpu）等。
-
-如果使用到某些 OpenCV 函数，就必须在链接时将程序与包含这些函数的库相连。每个模块都有一个对应的头文件（位于 include 目录）。包含头文件的格式如下：
-
-~~~c++
-#include <opencv2/core/core.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/highgui/highgui.hpp>
-~~~
-
-
-
-#### 3. 使用 OpenCV 库装载，显示和存储图像
-
-首先要确定实现功能所需的头文件，这里我们要简单的显示一个图像，所以需要定义了图像数据结构的核心库（core）以及包含了所有图形接口函数的 highgui 头文件：
-
-~~~c++
-#include <opencv2/core/core.hpp>
-#include <opencv2/highgui/highgui.hpp>
-~~~
-
-在 main 函数中，首先定义一个表示图像的变量。在 OpenCV2 中，定义 cv::Mat 的对象：
-
-~~~c++
-cv::Mat image; // 创建一个新图像
-~~~
-
-这个定义创建了一个尺寸为 0x0 的图像，可以通过方为 cv::Mat 的 size 属性来验证：
-
-~~~c++
-std::cout << "This image is " << image.rows << " x " << image.cols << " y " << std::endl;
-~~~
-
-接下来调用 cv::Mat 的读函数，就可以读入一个图像，解码，然后分配内存：
-
-~~~c++
-image = cv::imread("股票.svg"); // 读取输入图像
-~~~
-
-
-
-#### 4. Mat数据结构
-
-
-
-#### 6. OpenCV 人脸识别
-
-~~~c++
-#include <opencv2/objdetect.hpp>
-#include <opencv2/highgui.hpp>
-#include <opencv2/imgproc.hpp>
-#include <iostream>
-
-using namespace std;
-using namespace cv;
-
-// 检测人脸的函数
-void detectAndDraw(Mat& img, CascadeClassifier& cascade,
-	CascadeClassifier& nestedCascade, double scale);
-
-string cascadeName, nestedCascadeName;
-
-int main(int argc, const char** arg) {
-
-	// Video 捕获类， 用于为检测到的人脸播放视频 
-	VideoCapture capture;
-	Mat frame, image;
-
-	// 预训练好的， 具有面部特征的 XML 分类器 
-	CascadeClassifier cascade, nestedCascade;
-	double scale = 1;
-
-	// 从 "opencv/data/haarcascades" 目录加载分类器 
-	nestedCascade.load("F:/OPENCV/opencv/sources/data/haarcascades/haarcascade_eye.xml");
-
-	// 在程序执行前改变目录
-	cascade.load("F:/OPENCV/opencv/sources/data/haarcascades/haarcascade_frontalcatface.xml");
-
-	// Start Video..1) 0 for WebCam 2) "Path to Video" for a Local Video
-	capture.open(0);
-	if (capture.isOpened()) {
-
-		// 从 video 里获取画面（帧）， 还有监测人脸
-		cout << "Face Detection Started...." << endl;
-		while (1) {
-			capture >> frame;
-			if (frame.empty())
-				break;
-			Mat frame1 = frame.clone();
-			detectAndDraw(frame1, cascade, nestedCascade, scale);
-			char c = (char)waitKey(10);
-
-			// Press q to exit from window
-			if (c == 27 || c == 'q' || c == 'Q')
-				break;
-		}
-	}
-	else
-		cout << "Could not Open Camera";
-
-	return 0;
-}
-
-void detectAndDraw(Mat& img, CascadeClassifier& cascade,
-	CascadeClassifier& nestedCascade,
-	double scale)
-{
-	vector<Rect> faces, faces2;
-	Mat gray, smallImg;
-
-	cvtColor(img, gray, COLOR_RGB2GRAY); // 转换到 灰色的范围
-	double fx = 1 / scale;
-
-	// 重新设定 灰色图像的大小
-	resize(gray, smallImg, Size(), fx, fx, INTER_LINEAR);
-	equalizeHist(smallImg, smallImg);
-
-	// 使用级联分类器 检测不同尺寸的脸 
-	cascade.detectMultiScale(smallImg, faces, 1.1,
-		2, 0 | CASCADE_SCALE_IMAGE, Size(30, 30));
-
-	// 画一个圆形包围脸
-	for (size_t i = 0; i < faces.size(); i++) {
-		Rect r = faces[i];
-		Mat smallImgROI;
-		vector<Rect> nestedObjects;
-		Point center;
-		Scalar color = Scalar(255, 0, 0); // 给绘画工具设置颜色
-		int radius;
-
-		double aspect_ratio = (double)r.width / r.height;
-		if (0.75 < aspect_ratio && aspect_ratio < 1.3)
-		{
-			center.x = cvRound((r.x + r.width * 0.5) * scale);
-			center.y = cvRound((r.y + r.height * 0.5) * scale);
-			radius = cvRound((r.width + r.height) * 0.25 * scale);
-			circle(img, center, radius, color, 3, 8, 0);
-		}
-		else
-			rectangle(img, cvPoint(cvRound(r.x * scale), cvRound(r.y * scale)),
-				cvPoint(cvRound((r.x + r.width - 1) * scale),
-					cvRound((r.y + r.height - 1) * scale)), color, 3, 8, 0);
-		if (nestedCascade.empty())
-			continue;
-		smallImgROI = smallImg(r);
-
-		// 从输入图像中，检测眼睛
-		nestedCascade.detectMultiScale(smallImgROI, nestedObjects, 1.1, 2,
-			0 | CASCADE_SCALE_IMAGE, Size(30, 30));
-		// 在眼睛上画一个圆形
-		for (size_t j = 0; j < nestedObjects.size(); j++) {
-			Rect nr = nestedObjects[j];
-			center.x = cvRound((r.x + nr.x + nr.width * 0.5) * scale);
-			center.y = cvRound((r.y + nr.y + nr.height * 0.5) * scale);
-			radius = cvRound((nr.width + nr.height) * 0.25 * scale);
-			circle(img, center, radius, color, 3, 8, 0);
-		}
-
-		// 展现出处理过后 检测到的脸 的图像 
-		imshow("Face Detection", img);
-	}
-}
-~~~
-
-
-
-
-
-
-
-#### 7. 遇到问题
-
-问题：在 Ubuntu 虚拟机中使用摄像头无法获取图像，运行显示： select timeout。
-
-解决方法：关闭虚拟机，在虚拟机设置里将USB控制器设置为USB3.0兼容模式。
-
-![1633595634491](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1633595634491.png)
+[1] [OpenCV 安装](https://www.cnblogs.com/cxxszz/p/7338909.html)
