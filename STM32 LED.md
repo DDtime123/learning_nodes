@@ -1,4 +1,4 @@
-# STM32 LED实验
+# STM32 LED实验（寄存器方式和HAL库方式）
 
 **STM32 引脚**
 
@@ -52,7 +52,7 @@ STM32f103c8t6 最小系统板：
 
 
 
-#### 1. 利用串口下载程序
+#### 2. 利用串口下载程序
 
 将系统启动模式设置为从系统存储器启动：即将 BOOT1 接地，BOOT0 接电源 3.3V。
 
@@ -70,7 +70,7 @@ STM32f103c8t6 最小系统板：
 
 
 
-#### 2.**使用 Keil 创建工程项目：**
+#### 3.**使用标准库和寄存器方式点亮Led流水灯：**
 
 使能GPIO时钟：
 
@@ -276,7 +276,7 @@ GPIOB_CRL &= ~( 0x0F<< (4*x));  // 清空 PBx 管脚
 然后将 PB0 设置为了推挽输出模式，其中的 10 是MODEx 的值，表示最大速率 2 MHz：
 
 ~~~c
-GPIOB_CRL |= (10<<4*x);  		// 设置 PBx 管脚为推挽输出模式，且速率设置为2MHz
+GPIOB_CRL |= (2<<4*x);  		// 设置 PBx 管脚为推挽输出模式，且速率设置为2MHz，2为二进制10
 ~~~
 
 以下是用来控制输入输出模式的快捷变量：
@@ -330,13 +330,13 @@ void led_init2(void){
 	RCC_APB2ENR |= (1<<4); // 使能 GPIOC
 	
 	GPIOB_CRL &= ~( 0x0F<< (4*0)); // 清空 PB0
-	GPIOB_CRL |= (10<<4*0);  // 设置 PB0 管脚为推挽输出模式，且速率设置为2MHz
+	GPIOB_CRL |= (2<<4*0);  // 设置 PB0 管脚为推挽输出模式，且速率设置为2MHz
 
 	GPIOA_CRL &= ~( 0x0F<< (4*3)); // 清空 PA3
-	GPIOA_CRL |= (10<<4*3);  // 设置 PA3 管脚为推挽输出模式，且速率设置为2MHz
+	GPIOA_CRL |= (2<<4*3);  // 设置 PA3 管脚为推挽输出模式，且速率设置为2MHz
 	
 	GPIOC_CRH &= ~( 0x0F<< (4*5)); // 清空 PC13
-	GPIOC_CRH |= (10<<4*5);  // 设置 PC13 管脚为推挽输出模式，且速率设置为2MHz
+	GPIOC_CRH |= (2<<4*5);  // 设置 PC13 管脚为推挽输出模式，且速率设置为2MHz
 }
 ~~~
 
@@ -387,15 +387,32 @@ int main(void)
 
 
 
-#### 3. **利用 STM32CubeMX 创建工程项目：**
+#### 4. **使用HAL库方式创建Led流水灯：**
 
-第一步，在 STM32CubeMX  里将引脚 PA3，PB10，PC13设置为 推挽输出模式：
+第一步，在 STM32CubeMX  里将引脚 PA3，PB0，PC13设置为 推挽输出模式：
 
-![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/20211019210243.png)
+![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/20211024190601.png)
 
 ![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/20211020211437.png)
 
-点击 Generate Code ，选择对应的 IDE 后就可以生成该工程的工程项目：
+
+
+第二步，选择 GPIO 端口的速率，GPIO 端口的速率有三种：10Mhz，2Mhz和50Mhz，以下是在标准库中的 GPIO 速率宏定义：
+
+~~~c
+typedef enum
+{
+	GPIO_Speed_10MHz = 1, // 10MHZ (01)b
+	GPIO_Speed_2MHz, // 2MHZ (10)b
+	GPIO_Speed_50MHz // 50MHZ (11)b
+} GPIOSpeed_TypeDef;
+~~~
+
+而在 STM32CubeMX 中使用了 Low，Medium，High三种表示这三种速率，显然 Low 表示 2Mhz，Medium 表示 10Mhz，High表示 50Mhz。
+
+![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/20211024190412.png)
+
+第三步，点击 Generate Code ，选择对应的 IDE 后就可以生成该工程的工程项目：
 
 ![](https://gitee.com/zhang-jianhua1/blogimage/raw/master/img/20211020211558.png)
 
@@ -419,8 +436,16 @@ while(1){
 }
 ~~~
 
-#### 4. 参考
+执行效果：
+
+![img](https://pic3.zhimg.com/v2-114064e5faa0997ab2807d8f6b7c5892_b.gif)
+
+
+ 
+
+#### 5. 参考
 
 [1] [stm32 GPIO简单介绍及初始化配置（库函数）](https://blog.csdn.net/asdfg1075511750/article/details/79663568)
 
 [2] [STM32延时函数的三种方法](https://blog.csdn.net/qqGHJ/article/details/81429100?ops_request_misc=&request_id=&biz_id=102&utm_term=stm32%E5%BB%B6%E6%97%B6%E5%87%BD%E6%95%B0delay&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-0-81429100.nonecase&spm=1018.2226.3001.4187)
+
